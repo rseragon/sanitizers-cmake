@@ -29,11 +29,12 @@
 # project information
 #
 
-# minimum required cmake version
-cmake_minimum_required(VERSION 2.8)
+# minimum modern cmake version
+cmake_minimum_required(VERSION 3.14...3.22.2)
 
 # project name
-project("CMake-sanitizers")
+project(CMake-sanitizers
+        DESCRIPTION "CMake modules to help use sanitizers")
 
 
 
@@ -47,5 +48,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 #
 # add tests
 #
-enable_testing()
-add_subdirectory(tests)
+# Only test if standalone project
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    include(CTest)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

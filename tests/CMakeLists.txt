@@ -30,10 +30,10 @@ function(add_testcase TESTNAME SOURCEFILES)
 	list(REMOVE_AT ARGV 0)
 
 	# add a new executable
-	add_executable(${TESTNAME} ${ARGV})
+    add_executable(${TESTNAME} ${ARGV})
 
 	# add a testcase for executable
-	add_test(${TESTNAME} ${TESTNAME})
+    add_test(NAME ${TESTNAME} COMMAND ${TESTNAME})
 endfunction(add_testcase)
 
 # Function to add testcases with asan enabled.
@@ -61,7 +61,7 @@ add_sanitized_testcase("shortest_ext_test_cpp" shortest.ext.test.cpp)
 set_tests_properties(
 	"asan_test_cpp"
 	"shortest_ext_test_cpp"
-PROPERTIES
+    PROPERTIES
 	WILL_FAIL TRUE
 )
 
