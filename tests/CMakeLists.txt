@@ -44,7 +44,10 @@ endfunction(add_sanitized_testcase)
 
 
 
-set(SANITIZE_ADDRESS TRUE)
+#set(SANITIZE_ADDRESS TRUE)
+set(SANITIZE_MEMORY TRUE)
+#set(SANITIZE_UNDEFINED TRUE)
+#set(SANITIZE_THREAD TRUE)
 
 #
 # search for sanitizers

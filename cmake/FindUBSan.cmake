@@ -42,5 +42,9 @@ function (add_sanitize_undefined TARGET)
         return()
     endif ()
 
+    if(NOT UBSan_FLAG_DETECTED)
+        message(WARNING "UndefinedSanitizer is disabled for ${TARGET}")
+    endif()
+
     sanitizer_add_flags(${TARGET} "UndefinedBehaviorSanitizer" "UBSan")
 endfunction ()

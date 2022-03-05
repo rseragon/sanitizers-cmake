@@ -61,5 +61,9 @@ function (add_sanitize_thread TARGET)
         return()
     endif ()
 
+    if (NOT TSan_FLAG_DETECTED)
+        message(WARNING "ThreadSanitizer is disabled for ${TARGET}")
+    endif ()
+
     sanitizer_add_flags(${TARGET} "ThreadSanitizer" "TSan")
 endfunction ()

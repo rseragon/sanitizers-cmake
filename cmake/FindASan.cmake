@@ -55,5 +55,9 @@ function (add_sanitize_address TARGET)
         return()
     endif ()
 
+    if(NOT ASan_FLAG_DETECTED)
+        message(WARNING "AddressSanitizer disabled for target ${TARGET}")
+    endif()
+
     sanitizer_add_flags(${TARGET} "AddressSanitizer" "ASan")
 endfunction ()
