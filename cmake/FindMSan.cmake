@@ -25,7 +25,7 @@
 option(SANITIZE_MEMORY "Enable MemorySanitizer for sanitized targets." Off)
 
 set(FLAG_CANDIDATES
-    "-g -fsanitize=memory"
+    "fsanitize=memory -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer -g"
 )
 
 
