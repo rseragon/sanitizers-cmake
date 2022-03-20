@@ -34,10 +34,10 @@ set(FLAG_CANDIDATES
 )
 
 
-if (SANITIZE_ADDRESS AND (SANITIZE_THREAD OR SANITIZE_MEMORY))
-    message(FATAL_ERROR "AddressSanitizer is not compatible with "
-        "ThreadSanitizer or MemorySanitizer.")
-endif ()
+#if (SANITIZE_ADDRESS AND (SANITIZE_THREAD OR SANITIZE_MEMORY))
+#    message(FATAL_ERROR "AddressSanitizer is not compatible with "
+#        "ThreadSanitizer or MemorySanitizer.")
+#endif ()
 
 
 include(sanitize-helpers)
@@ -54,6 +54,16 @@ function (add_sanitize_address TARGET)
     if (NOT SANITIZE_ADDRESS)
         return()
     endif ()
+
+    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_MEMORY) NOT EQUAL -1)
+        message(WARNING "Cannot enable Address and Memory sanitizer on the same target")
+    endif ()
+
+    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_THREAD) NOT EQUAL -1)
+        message(WARNING "Cannot enable Address and Thread sanitizer on the same target")
+    endif ()
+
+    list(APPEND ${TARGET}_ENABLED_SANITIZERS SANITIZE_ADDRESS)
 
     if(NOT ASan_FLAG_DETECTED)
         message(WARNING "AddressSanitizer disabled for target ${TARGET}")

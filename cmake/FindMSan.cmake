@@ -53,6 +53,18 @@ function (add_sanitize_memory TARGET)
         return()
     endif ()
 
+    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_ADDRESS) NOT EQUAL -1)
+        message(WARNING "Cannot enable Address and Memory sanitizer on the same target")
+    endif ()
+
+    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_THREAD) NOT EQUAL -1)
+        message(WARNING "Cannot enable Address and Thread sanitizer on the same target")
+    endif ()
+
+    list(APPEND ${TARGET}_ENABLED_SANITIZERS SANITIZE_MEMORY)
+
+
+
     if(NOT MSan_FLAG_DETECTED)
         message(WARNING "MemorySanitizer disabled for target ${TARGET}")
     endif()

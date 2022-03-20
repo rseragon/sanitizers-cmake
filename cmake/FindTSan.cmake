@@ -61,6 +61,18 @@ function (add_sanitize_thread TARGET)
         return()
     endif ()
 
+    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_ADDRESS) NOT EQUAL -1)
+        message(WARNING "Cannot enable Address and Memory sanitizer on the same target")
+    endif ()
+
+    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_MEMORY) NOT EQUAL -1)
+        message(WARNING "Cannot enable Address and Thread sanitizer on the same target")
+    endif ()
+
+    list(APPEND ${TARGET}_ENABLED_SANITIZERS SANITIZE_THREAD)
+
+
+
     if (NOT TSan_FLAG_DETECTED)
         message(WARNING "ThreadSanitizer is disabled for ${TARGET}")
     endif ()
