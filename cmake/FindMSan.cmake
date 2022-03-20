@@ -53,13 +53,15 @@ function (add_sanitize_memory TARGET)
         return()
     endif ()
 
-    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_ADDRESS) NOT EQUAL -1)
+    list(FIND "${TARGET}_ENABLED_SANITIZERS" SANITIZE_ADDRESS HasAddressSanEnabled)
+    if(NOT ${HasAddressSanEnabled} EQUAL -1)
         message(WARNING "Cannot enable Address and Memory sanitizer on the same target")
-    endif ()
+    endif()
 
-    if (list(GET ${TARGET}_ENABLED_SANITIZERS SANITIZE_THREAD) NOT EQUAL -1)
+    list(FIND "${TARGET}_ENABLED_SANITIZERS" SANITIZE_THREAD HasThreadSanEnabled)
+    if(NOT ${HasThreadSanEnabled} EQUAL -1)
         message(WARNING "Cannot enable Address and Thread sanitizer on the same target")
-    endif ()
+    endif()
 
     list(APPEND ${TARGET}_ENABLED_SANITIZERS SANITIZE_MEMORY)
 

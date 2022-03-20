@@ -49,6 +49,8 @@ set(SANITIZE_MEMORY TRUE)
 #set(SANITIZE_UNDEFINED TRUE)
 #set(SANITIZE_THREAD TRUE)
 
+set(SANITIZE_LINK_STATIC OFF)
+
 #
 # search for sanitizers
 #
